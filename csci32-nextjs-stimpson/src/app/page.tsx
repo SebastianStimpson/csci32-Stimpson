@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -10,9 +10,8 @@ export default function Home() {
         Noteworthy technology acquisitions 2021
       </h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">
-        Here are the biggest enterprise technology acquisitions of 2021 so far,
-        in reverse chronological order.
+        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
       </p>
     </a>
-  );
+  )
 }
