@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <header className="bg-white shadow">
           <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold">Painter's Name</h1>
+            <h1 className="text-3xl font-bold">John Smith</h1>
             <nav>
               <ul className="flex space-x-4">
                 <li>
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Footer */}
         <footer className="bg-white p-6 mt-12 text-center">
-          <p>© 2024 Painter's Name. All rights reserved.</p>
+          <p>© 2024 Painter's R'S. All rights reserved.</p>
         </footer>
       </body>
     </html>

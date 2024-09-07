@@ -28,7 +28,7 @@ export default function Portfolio() {
           </div>
           <div>
             <Image
-              src="/your-image-path-here.jpg"
+              src="https://homolkapainting.com/site/wp-content/uploads/residential.jpg"
               alt="Painter's Work"
               width={500}
               height={500}
@@ -40,7 +40,7 @@ export default function Portfolio() {
 
       {/* Footer */}
       <footer className="bg-white p-6 mt-12 text-center">
-        <p>© 2024 Painter's Name. All rights reserved.</p>
+        <p>© 2024 Painter's R'S. All rights reserved.</p>
       </footer>
     </React.Fragment>
   )

@@ -25,7 +25,7 @@ export default function Home() {
           </div>
           <div>
             <Image
-              src="/your-image-path-here.jpg"
+              src="https://rdcnewscdn.realtor.com/wp-content/uploads/2015/08/house-painter.jpg"
               alt="Painter's Work"
               width={500}
               height={500}

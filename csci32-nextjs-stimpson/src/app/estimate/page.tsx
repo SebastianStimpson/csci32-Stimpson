@@ -77,7 +77,7 @@ export default function Estimate() {
 
       {/* Footer */}
       <footer className="bg-white p-6 mt-12 text-center">
-        <p>© 2024 Painter's Name. All rights reserved.</p>
+        <p>© 2024 Painter's R'S. All rights reserved.</p>
       </footer>
     </React.Fragment>
   )
