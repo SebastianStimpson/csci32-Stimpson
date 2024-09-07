@@ -1,16 +1,16 @@
-import Head from 'next/head';
-import React, { useEffect } from 'react';
-import dynamic from 'next/dynamic';
+import Head from 'next/head'
+import React, { useEffect } from 'react'
+import dynamic from 'next/dynamic'
 
 // Dynamically import FullCalendar components
-const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false });
-const { Calendar } = require('@fullcalendar/core');
-const dayGridPlugin = require('@fullcalendar/daygrid');
+const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false })
+const { Calendar } = require('@fullcalendar/core')
+const dayGridPlugin = require('@fullcalendar/daygrid')
 
 export default function Estimate() {
   useEffect(() => {
     // Initialize FullCalendar when the component mounts
-    const calendarEl = document.getElementById('calendar');
+    const calendarEl = document.getElementById('calendar')
     const calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin],
       initialView: 'dayGridMonth',
@@ -19,9 +19,9 @@ export default function Estimate() {
         { title: 'Job 1', date: '2024-09-10' },
         { title: 'Job 2', date: '2024-09-15' },
       ],
-    });
-    calendar.render();
-  }, []);
+    })
+    calendar.render()
+  }, [])
 
   return (
     <React.Fragment>
@@ -80,5 +80,5 @@ export default function Estimate() {
         <p>© 2024 Painter's Name. All rights reserved.</p>
       </footer>
     </React.Fragment>
-  );
+  )
 }
