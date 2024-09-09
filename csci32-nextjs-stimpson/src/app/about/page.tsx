@@ -28,7 +28,7 @@ export default function Portfolio() {
           </div>
           <div>
             <Image
-              src="https://homolkapainting.com/site/wp-content/uploads/residential.jpg"
+              src=""
               alt="Painter's Work"
               width={500}
               height={500}
