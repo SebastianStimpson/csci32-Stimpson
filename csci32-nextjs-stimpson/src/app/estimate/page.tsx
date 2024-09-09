@@ -31,7 +31,7 @@ export default function Estimate() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Estimate - Painter</title>
         <link href="/dist/output.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.2/main.min.css" />
+        <link rel="stylesheet" href="" />
       </Head>
 
       {/* Header */}

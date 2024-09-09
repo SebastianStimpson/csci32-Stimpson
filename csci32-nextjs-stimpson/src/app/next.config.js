@@ -2,8 +2,4 @@
 const nextConfig = {};
 
 export default nextConfig;
-module.exports = {
-  images: {
-    domains: ['rdcnewscdn.realtor.com'],
-  },
-}
+
