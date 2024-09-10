@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ['realtor.com', 'rdcnewscdn.realtor.com'],
+  },
+}
 
-export default nextConfig;
+export default nextConfig
