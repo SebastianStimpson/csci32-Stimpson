@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Footer */}
         <footer className="bg-white p-6 mt-12 text-center">
-          <p>© 2024 Painter's R'S. All rights reserved.</p>
+          <p>© 2024 Painter&apos;s R&apos;S. All rights reserved.</p>
         </footer>
       </body>
     </html>
