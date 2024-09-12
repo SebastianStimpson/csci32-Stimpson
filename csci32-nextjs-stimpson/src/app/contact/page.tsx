@@ -1,5 +1,5 @@
-import Head from 'next/head';
-import React from 'react'; // Importing React to use React.Fragment
+import Head from 'next/head'
+import React from 'react' // Importing React to use React.Fragment
 
 export default function Contact() {
   return (
@@ -51,8 +51,8 @@ export default function Contact() {
 
       {/* Footer */}
       <footer className="bg-white p-6 mt-12 text-center">
-        <p>© 2024 Painter's R'S. All rights reserved.</p>
+        <p>© 2024 Painter&apos;s R&apos;S. All rights reserved.</p>
       </footer>
     </React.Fragment>
-  );
+  )
 }
