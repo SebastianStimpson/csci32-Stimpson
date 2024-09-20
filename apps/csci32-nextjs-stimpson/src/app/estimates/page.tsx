@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { DateSelectArg } from '@fullcalendar/core'
+import { DateSelectArg, EventInput } from '@fullcalendar/core'
 
 // Dynamically import FullCalendar component
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false })
@@ -17,12 +17,20 @@ interface TimeSlot {
 }
 
 export default function Estimate() {
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null)
+  // State variables for form inputs
+  const [name, setName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
 
-  const events = [
-    { title: 'Job 1', date: '2024-09-10' },
-    { title: 'Job 2', date: '2024-09-15' },
-  ]
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null)
+  const [events, setEvents] = useState<EventInput[]>([
+    { title: 'Job 1', start: '2024-09-10' },
+    { title: 'Job 2', start: '2024-09-15' },
+  ])
+
+  // State for form submission feedback
+  const [submissionMessage, setSubmissionMessage] = useState<string>('')
+  const [formErrors, setFormErrors] = useState<string>('')
 
   // Handle time slot selection
   const handleDateSelect = (selectInfo: DateSelectArg) => {
@@ -34,6 +42,36 @@ export default function Estimate() {
       start: selectInfo.startStr,
       end: selectInfo.endStr,
     })
+  }
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    // Basic validation
+    if (!name || !email || !description || !selectedTimeSlot) {
+      setFormErrors('Please fill out all fields and select a time slot.')
+      return
+    }
+
+    // Clear any previous errors
+    setFormErrors('')
+
+    // Add the new event to the calendar
+    const newEvent: EventInput = {
+      title: `Appointment with ${name}`,
+      start: selectedTimeSlot.start,
+      end: selectedTimeSlot.end,
+    }
+    setEvents([...events, newEvent])
+
+    // Display success message
+    setSubmissionMessage('Your appointment has been scheduled.')
+
+    // Reset the form fields and selected time slot
+    setName('')
+    setEmail('')
+    setDescription('')
+    setSelectedTimeSlot(null)
   }
 
   return (
@@ -76,6 +114,8 @@ export default function Estimate() {
             }}
             // Optional: Set the initial date to today's date
             initialDate={new Date().toISOString().slice(0, 10)}
+            // Prevent selection overlap with existing events
+            selectOverlap={false}
           />
         </section>
 
@@ -91,26 +131,50 @@ export default function Estimate() {
           </section>
         )}
 
+        {/* Display Form Submission Feedback */}
+        {submissionMessage && <div className="mb-8 p-4 bg-green-100 text-green-700 rounded">{submissionMessage}</div>}
+
+        {/* Display Form Errors */}
+        {formErrors && <div className="mb-8 p-4 bg-red-100 text-red-700 rounded">{formErrors}</div>}
+
         <section>
           <h2 className="text-4xl font-semibold mb-4">Request an Estimate</h2>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name" className="block text-lg">
                 Name
               </label>
-              <input type="text" id="name" className="border border-gray-300 p-2 rounded w-full" />
+              <input
+                type="text"
+                id="name"
+                className="border border-gray-300 p-2 rounded w-full"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
             <div>
               <label htmlFor="email" className="block text-lg">
                 Email
               </label>
-              <input type="email" id="email" className="border border-gray-300 p-2 rounded w-full" />
+              <input
+                type="email"
+                id="email"
+                className="border border-gray-300 p-2 rounded w-full"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div>
               <label htmlFor="description" className="block text-lg">
                 Project Description
               </label>
-              <textarea id="description" className="border border-gray-300 p-2 rounded w-full" defaultValue="" />
+              <textarea
+                id="description"
+                className="border border-gray-300 p-2 rounded w-full"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={4}
+              />
             </div>
             {/* Include selected time slot in the form submission */}
             {selectedTimeSlot && (
