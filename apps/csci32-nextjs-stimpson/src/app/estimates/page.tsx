@@ -1,28 +1,18 @@
 'use client'
 import Head from 'next/head'
-import React, { useEffect } from 'react'
+import React from 'react'
 import dynamic from 'next/dynamic'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction' // Optional, for interactivity
 
-// Dynamically import FullCalendar components
+// Dynamically import FullCalendar component
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false })
-const { Calendar } = require('@fullcalendar/core')
-const dayGridPlugin = require('@fullcalendar/daygrid')
 
 export default function Estimate() {
-  useEffect(() => {
-    // Initialize FullCalendar when the component mounts
-    const calendarEl = document.getElementById('calendar')
-    const calendar = new Calendar(calendarEl, {
-      plugins: [dayGridPlugin],
-      initialView: 'dayGridMonth',
-      events: [
-        // Example events
-        { title: 'Job 1', date: '2024-09-10' },
-        { title: 'Job 2', date: '2024-09-15' },
-      ],
-    })
-    calendar.render()
-  }, [])
+  const events = [
+    { title: 'Job 1', date: '2024-09-10' },
+    { title: 'Job 2', date: '2024-09-15' },
+  ]
 
   return (
     <React.Fragment>
@@ -32,7 +22,9 @@ export default function Estimate() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Estimate - Painter</title>
         <link href="/dist/output.css" rel="stylesheet" />
-        <link rel="stylesheet" href="" />
+        {/* Include FullCalendar CSS */}
+        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/main.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/main.min.css" rel="stylesheet" />
       </Head>
 
       {/* Header */}
@@ -46,7 +38,8 @@ export default function Estimate() {
       <main className="container mx-auto py-12">
         <section className="mb-8">
           <h2 className="text-4xl font-semibold mb-4">Upcoming Jobs Schedule</h2>
-          <div id="calendar" />
+          {/* Render FullCalendar Component */}
+          <FullCalendar plugins={[dayGridPlugin, interactionPlugin]} initialView="dayGridMonth" events={events} />
         </section>
         <section>
           <h2 className="text-4xl font-semibold mb-4">Request an Estimate</h2>
@@ -67,7 +60,7 @@ export default function Estimate() {
               <label htmlFor="description" className="block text-lg">
                 Project Description
               </label>
-              <textarea id="description" className="border border-gray-300 p-2 rounded w-full" defaultValue={''} />
+              <textarea id="description" className="border border-gray-300 p-2 rounded w-full" defaultValue="" />
             </div>
             <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
               Submit
