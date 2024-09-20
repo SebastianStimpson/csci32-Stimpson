@@ -1,10 +1,9 @@
 import Head from 'next/head'
-import React from 'react' // Importing React to use React.Fragment
+import React from 'react'
 
 export default function Contact() {
   return (
     <React.Fragment>
-      {/* Head Metadata */}
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,14 +11,11 @@ export default function Contact() {
         <link href="/dist/output.css" rel="stylesheet" />
       </Head>
 
-      {/* Header */}
       <header className="bg-white shadow">
         <div className="container mx-auto p-6">
           <h1 className="text-3xl font-bold">Contact Me</h1>
         </div>
       </header>
-
-      {/* Main Content */}
       <main className="container mx-auto py-12">
         <section>
           <h2 className="text-4xl font-semibold mb-4">Get in Touch</h2>
@@ -48,8 +44,6 @@ export default function Contact() {
           </form>
         </section>
       </main>
-
-      {/* Footer */}
       <footer className="bg-white p-6 mt-12 text-center">
         <p>© 2024 Painter&apos;s R&apos;S. All rights reserved.</p>
       </footer>
