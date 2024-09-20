@@ -19,7 +19,7 @@ export default function Home() {
               Welcome to the portfolio of a passionate painter. Check out my latest works and get in touch for an
               estimate on your next project.
             </p>
-            <a href="/estimate.html" className="mt-6 inline-block bg-blue-500 text-white py-2 px-4 rounded">
+            <a href="/estimates" className="mt-6 inline-block bg-blue-500 text-white py-2 px-4 rounded">
               Get an Estimate
             </a>
           </div>
