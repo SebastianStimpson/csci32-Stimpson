@@ -11,8 +11,10 @@
   "exports": {
     "./styles.css": "./dist/index.css",
     "./button": "./src/button.tsx",
+    "./input": "./src/input.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
+    "./tokens": "./src/tokens.ts",
     "./variant": "./src/variant.ts",
     "./size": "./src/size.ts"
   },
