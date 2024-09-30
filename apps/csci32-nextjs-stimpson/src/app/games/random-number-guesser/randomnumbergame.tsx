@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { getRandomInt } from '@repo/math/getRandomInt'
+import { getRandomInt } from './getrandomint'
 import classNames from 'classnames'
 
 interface Props {
@@ -72,6 +72,7 @@ export default function RandomNumberGame({ settings, onGameOver }: Props) {
       <p className="mb-2">Guesses Left: {guessesLeft}</p>
       {!gameOver && (
         <>
+          {/* Input to enter a guess with a button inside of a form */}
           <form onSubmit={handleSubmit} className="flex space-x-2 mb-2">
             <input
               type="number"
