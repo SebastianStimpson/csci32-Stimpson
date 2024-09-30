@@ -1,1 +1,1 @@
-{"root":["./src/button.tsx","./src/card.tsx","./src/code.tsx","./src/input.tsx","./src/size.ts","./src/tokens.ts","./src/variant.ts"],"version":"5.6.2"}
+{"root":["./tailwind.config.ts","./dist/button.d.ts","./dist/card.d.ts","./dist/code.d.ts","./dist/input.d.ts","./dist/size.d.ts","./dist/tokens.d.ts","./dist/variant.d.ts","./src/button.tsx","./src/card.tsx","./src/code.tsx","./src/input.tsx","./src/size.ts","./src/tokens.ts","./src/variant.ts","./turbo/generators/config.ts"],"errors":true,"version":"5.6.2"}
