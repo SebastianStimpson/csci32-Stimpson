@@ -8,6 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@types/classnames": "^2.3.0",
     "prettier": "^3.2.5",
     "turbo": "^2.1.2",
     "typescript": "^5.4.5"
@@ -22,6 +23,8 @@
   ],
   "dependencies": {
     "@fullcalendar/interaction": "^6.1.15",
-    "@fullcalendar/timegrid": "^6.1.15"
+    "@fullcalendar/timegrid": "^6.1.15",
+    "classnames": "^2.5.1",
+    "tailwindcss": "^3.4.13"
   }
 }
