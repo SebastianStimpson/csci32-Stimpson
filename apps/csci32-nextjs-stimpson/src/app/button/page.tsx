@@ -1,6 +1,7 @@
-import { Button } from '@repo/ui/button'
-import { Size } from '@repo/ui/size'
-import { Variant } from '@repo/ui/variant'
+/* import Button from '@repo/ui/button';
+import { Size } from '@repo/ui/size';
+import { Variant } from '@repo/ui/variant';
+
 
 export default function ButtonPage() {
   return (
@@ -41,3 +42,4 @@ export default function ButtonPage() {
     </div>
   )
 }
+ */

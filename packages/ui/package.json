@@ -1,42 +1,53 @@
 {
   "name": "@repo/ui",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "sideEffects": [
     "**/*.css"
   ],
   "files": [
     "dist"
   ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
     "./styles.css": "./dist/index.css",
-    "./button": "./src/button.tsx",
-    "./input": "./src/input.tsx",
-    "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx",
-    "./tokens": "./src/tokens.ts",
-    "./variant": "./src/variant.ts",
-    "./size": "./src/size.ts"
+    "./button": {
+      "import": "./dist/button.js",
+      "require": "./dist/button.js",
+      "types": "./dist/button.d.ts"
+    },
+    "./size": {
+      "import": "./dist/size.js",
+      "require": "./dist/size.js",
+      "types": "./dist/size.d.ts"
+    },
+    "./variant": {
+      "import": "./dist/variant.js",
+      "require": "./dist/variant.js",
+      "types": "./dist/variant.d.ts"
+    }
   },
   "scripts": {
-    "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build": "tsc && tailwindcss -i ./src/styles.css -o ./dist/index.css",
     "lint": "eslint src/",
-    "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "dev": "tsc -w & tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@turbo/gen": "^1.12.4",
-    "@types/node": "^20.11.24",
-    "@types/eslint": "^8.56.5",
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3",
     "tailwindcss": "^3.4.1"
   },
-  "dependencies": {
-    "react": "^18.2.0"
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
