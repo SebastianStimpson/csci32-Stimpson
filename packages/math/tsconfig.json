@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "ESNext",
+    "outDir": "dist",
+    "rootDir": "src",
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
@@ -14,5 +16,5 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,4 +1,7 @@
+'use client'
+
 import React, { useState } from 'react'
+
 export interface GameSettings {
   min: number
   max: number
