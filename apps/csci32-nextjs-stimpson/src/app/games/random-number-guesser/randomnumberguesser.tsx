@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
-import RandomNumberGameMenu, { GameSettings } from './randomnumbergamemenu'
-import RandomNumberGame from './randomnumbergame'
+import { useState } from 'react'
+import RandomNumberGameMenu, { GameSettings } from './RandomNumberGameMenu'
+import RandomNumberGame from './RandomNumberGame'
 
 export default function RandomNumberGuesser() {
   const [gameSettings, setGameSettings] = useState<GameSettings | null>(null)
 
-  const startGame = (settings: GameSettings) => {
+  const handleStartGame = (settings: GameSettings) => {
     setGameSettings(settings)
   }
 
@@ -16,11 +16,11 @@ export default function RandomNumberGuesser() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      {!gameSettings ? (
-        <RandomNumberGameMenu onStartGame={startGame} />
-      ) : (
+    <div>
+      {gameSettings ? (
         <RandomNumberGame settings={gameSettings} onGameOver={handleGameOver} />
+      ) : (
+        <RandomNumberGameMenu onStartGame={handleStartGame} />
       )}
     </div>
   )

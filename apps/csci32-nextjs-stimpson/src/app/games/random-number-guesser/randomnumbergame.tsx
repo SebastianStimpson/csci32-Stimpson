@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { getRandomInt } from './getrandomint'
+import { getRandomInt } from './getRandomInt'
 import classNames from 'classnames'
 
 interface Props {
@@ -15,17 +15,24 @@ interface Props {
 
 export default function RandomNumberGame({ settings, onGameOver }: Props) {
   const { min, max, maxGuesses } = settings
-  const [targetNumber] = useState(getRandomInt(min, max))
-  const [guess, setGuess] = useState('')
-  const [feedback, setFeedback] = useState('')
-  const [guessesLeft, setGuessesLeft] = useState(maxGuesses)
-  const [lowRange, setLowRange] = useState(min)
-  const [highRange, setHighRange] = useState(max)
-  const [recommendedGuess, setRecommendedGuess] = useState(Math.floor((min + max) / 2))
+  const [targetNumber] = useState<number>(getRandomInt(min, max + 1))
+  const [guess, setGuess] = useState<string>('')
+  const [feedback, setFeedback] = useState<string>('')
+  const [guessesLeft, setGuessesLeft] = useState<number>(maxGuesses)
+  const [lowRange, setLowRange] = useState<number>(min)
+  const [highRange, setHighRange] = useState<number>(max)
+  const [recommendedGuess, setRecommendedGuess] = useState<number>(Math.floor((min + max) / 2))
+
+  const gameOver = feedback === 'You win!' || feedback.startsWith('You lose!')
+
+  const bgColor = classNames({
+    'bg-white': true,
+    'bg-red-50': guessesLeft === 1 && !gameOver,
+    'bg-green-50': feedback === 'You win!',
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-
     const userGuess = Number(guess)
     if (isNaN(userGuess)) {
       setFeedback('Please enter a valid number')
@@ -40,10 +47,10 @@ export default function RandomNumberGame({ settings, onGameOver }: Props) {
     if (userGuess === targetNumber) {
       setFeedback('You win!')
     } else if (userGuess < targetNumber) {
-      setFeedback('Higher')
+      setFeedback('🔼 Too low!')
       setLowRange(userGuess + 1)
     } else {
-      setFeedback('Lower')
+      setFeedback('🔽 Too high!')
       setHighRange(userGuess - 1)
     }
 
@@ -57,43 +64,53 @@ export default function RandomNumberGame({ settings, onGameOver }: Props) {
   }
 
   useEffect(() => {
-    setRecommendedGuess(Math.floor((lowRange + highRange) / 2))
+    if (lowRange <= highRange) {
+      setRecommendedGuess(Math.floor((lowRange + highRange) / 2))
+    }
   }, [lowRange, highRange])
 
-  const gameOver = feedback === 'You win!' || feedback.startsWith('You lose!')
+  const handleRestart = () => {
+    onGameOver()
+  }
 
   return (
-    <div
-      className={classNames('p-4 max-w-md mx-auto', {
-        'bg-red-50': guessesLeft === 1 && !gameOver,
-        'bg-green-50': feedback === 'You win!',
-      })}
-    >
+    <div className={`p-8 rounded shadow-md ${bgColor}`}>
+      <h2 className="text-2xl font-bold mb-4">Guess the Number</h2>
       <p className="mb-2">Guesses Left: {guessesLeft}</p>
-      {!gameOver && (
+
+      {!gameOver ? (
         <>
-          {/* Input to enter a guess with a button inside of a form */}
-          <form onSubmit={handleSubmit} className="flex space-x-2 mb-2">
+          <p>
+            Enter a number between {lowRange} and {highRange}.
+          </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="number"
               value={guess}
               onChange={(e) => setGuess(e.target.value)}
-              className="input w-full"
-              placeholder={`Enter a number between ${lowRange} and ${highRange}`}
+              className="block w-full border rounded p-2"
+              min={lowRange}
+              max={highRange}
             />
-            <button type="submit" className="btn">
+            <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
               Guess
             </button>
           </form>
-          <p>Recommended Guess: {recommendedGuess}</p>
+          {recommendedGuess !== null && <p className="mt-2">Recommended Guess: {recommendedGuess}</p>}
+        </>
+      ) : (
+        <>
+          <p className="mt-4 text-lg">{feedback}</p>
+          <button
+            onClick={handleRestart}
+            className="mt-4 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
+          >
+            Play Again
+          </button>
         </>
       )}
-      <p className="mt-2">{feedback}</p>
-      {gameOver && (
-        <button onClick={onGameOver} className="btn mt-4">
-          Play Again
-        </button>
-      )}
+
+      {!gameOver && <p className="mt-2">{feedback}</p>}
     </div>
   )
 }
