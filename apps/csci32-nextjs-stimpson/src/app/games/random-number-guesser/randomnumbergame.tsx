@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { getRandomInt } from './getrandomint'
-import classNames from 'classnames'
 
 interface Props {
   settings: {
@@ -22,14 +21,19 @@ export default function RandomNumberGame({ settings, onGameOver }: Props) {
   const [lowRange, setLowRange] = useState<number>(min)
   const [highRange, setHighRange] = useState<number>(max)
   const [recommendedGuess, setRecommendedGuess] = useState<number>(Math.floor((min + max) / 2))
+  const [bgColor, setBgColor] = useState<string>('bg-white')
 
   const gameOver = feedback === 'You win!' || feedback.startsWith('You lose!')
 
-  const bgColor = classNames({
-    'bg-white': true,
-    'bg-red-50': guessesLeft === 1 && !gameOver,
-    'bg-green-50': feedback === 'You win!',
-  })
+  useEffect(() => {
+    if (guessesLeft === 1 && !gameOver) {
+      setBgColor('bg-red-50')
+    } else if (feedback === 'You win!') {
+      setBgColor('bg-green-100')
+    } else {
+      setBgColor('bg-white')
+    }
+  }, [guessesLeft, feedback, gameOver])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
