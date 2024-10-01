@@ -12,13 +12,15 @@
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
+    "@repo/math": "*",
+    "@repo/ui": "*",
+    "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "clx": "^1.0.0",
+    "csci32-nextjs-stimpson": "file:",
     "next": "14.2.7",
     "react": "^18",
-    "react-dom": "^18",
-    "@repo/ui": "*",
-    "@repo/math": "*"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

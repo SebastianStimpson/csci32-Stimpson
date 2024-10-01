@@ -1,6 +1,6 @@
 'use client'
 
-import RandomNumberGuesser from './RandomNumberGuesser'
+import RandomNumberGuesser from './randomnumberguesser'
 
 export default function RandomNumberGuesserPage() {
   return <RandomNumberGuesser />

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { getRandomInt } from './getRandomInt'
+import { getRandomInt } from './getrandomint'
 import classNames from 'classnames'
 
 interface Props {
