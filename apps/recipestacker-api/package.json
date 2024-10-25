@@ -12,7 +12,7 @@
     "start": "node dist/app.js",
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
-    "dev": "export NODE_ENV='development' && tsx watch src/app.ts"
+    "dev": "cross-env NODE_ENV='development' && tsx watch src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
     "@fastify/type-provider-typebox": "^4.1.0",
     "@repo/recipestacker-database": "*",
     "@sinclair/typebox": "^0.33.7",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "fastify": "^4.26.1",
     "fastify-cli": "^6.3.0",
