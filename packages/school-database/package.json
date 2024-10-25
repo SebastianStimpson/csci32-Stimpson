@@ -1,5 +1,5 @@
 {
-  "name": "@repo/recipestacker-database",
+  "name": "@repo/school-database",
   "version": "1.0.0",
   "exports": {
     ".": "./src/client.ts"
