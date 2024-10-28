@@ -3,45 +3,50 @@
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  url      = env("SCHOOL_DATABASE_URL")
+  relationMode = "prisma"
 }
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
 }
 
-model User {
-  user_id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  recipes   Recipe[]
+model Student {
+  student_id       String    @id @default(cuid())
+  name             String?
+  email            String?   @unique
+  emailVerified    DateTime?
+  enrollmentNumber String    @unique
+  enrollments      Enrollment[]
+
+  @@index([student_id])
 }
 
-model Ingredient {
-  ingredient_id            String    @id @default(cuid())
-  name          String?
-  description   String?
-  ingredient_measurements IngredientMeasurement[]
+model Professor {
+  professor_id String    @id @default(cuid())
+  name         String
+  classes      Class[]
+
+  @@index([professor_id])
 }
 
-model Recipe {
-  recipe_id String @id @default(cuid())
-  name  String?
-  description String?
-  ingredient_measurements IngredientMeasurement[]
-  user User @relation(fields: [user_id], references: [user_id])
-  user_id  String
+model Class {
+  class_id     String    @id @default(cuid())
+  name         String
+  professor    Professor @relation(fields: [professor_id], references: [professor_id])
+  professor_id String
+  enrollments  Enrollment[]
+
+  @@index([professor_id])
 }
 
-model IngredientMeasurement {
-  @@id([ingredient_id, recipe_id])
-  ingredient_id String
-  ingredient Ingredient @relation(fields: [ingredient_id], references: [ingredient_id])
-  recipe Recipe @relation(fields: [recipe_id], references: [recipe_id])
-  recipe_id String
-  unit String
-  quantity Int @default(0)
+model Enrollment {
+  enrollment_id String   @id @default(cuid())
+  student       Student  @relation(fields: [student_id], references: [student_id])
+  student_id    String
+  class         Class    @relation(fields: [class_id], references: [class_id])
+  class_id      String
+
+  @@index([student_id])
+  @@index([class_id])
 }

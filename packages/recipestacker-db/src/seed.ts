@@ -1,30 +1,92 @@
 import { prisma } from './client'
+import { randomUUID } from 'crypto'
 
-import type { User } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 
-const DEFAULT_USERS = [
-  // Add your own user to pre-populate the database with
-  {
-    name: 'Tim Apple',
-    email: 'tim@apple.com',
-  },
-] as Array<Partial<User>>
+const DEFAULT_PROFESSORS = [{ name: 'Dr. Smith' }, { name: 'Dr. Johnson' }, { name: 'Dr. Williams' }] as Array<
+  Partial<Prisma.ProfessorCreateInput>
+>
+
+const DEFAULT_CLASSES = [
+  { name: 'Math 101', professorName: 'Dr. Smith' },
+  { name: 'History 201', professorName: 'Dr. Johnson' },
+  { name: 'Science 301', professorName: 'Dr. Williams' },
+] as Array<{ name: string; professorName: string }>
+
+const DEFAULT_STUDENTS = [
+  { name: 'John Doe', email: 'john@doe.com' },
+  { name: 'Jane Smith', email: 'jane@smith.com' },
+] as Array<Partial<Prisma.StudentCreateInput>>
 
 ;(async () => {
   try {
+    // Upsert Students with Random Enrollment Numbers
     await Promise.all(
-      DEFAULT_USERS.map((user) =>
-        prisma.user.upsert({
+      DEFAULT_STUDENTS.map((student) =>
+        prisma.student.upsert({
           where: {
-            email: user.email!,
+            email: student.email!,
           },
           update: {
-            ...user,
+            ...student,
           },
           create: {
-            ...user,
+            ...student,
+            enrollmentNumber: randomUUID(),
           },
         }),
+      ),
+    )
+
+    // Create Professors
+    await Promise.all(
+      DEFAULT_PROFESSORS.map((professor) =>
+        prisma.professor.create({
+          data: {
+            ...professor,
+          },
+        }),
+      ),
+    )
+
+    // Create Classes with assigned Professors
+    await Promise.all(
+      DEFAULT_CLASSES.map(async ({ name, professorName }) => {
+        const professor = await prisma.professor.findFirst({
+          where: { name: professorName },
+        })
+
+        if (professor) {
+          await prisma.class.create({
+            data: {
+              name,
+              professor: {
+                connect: { id: professor.id },
+              },
+            },
+          })
+        }
+      }),
+    )
+
+    // Enroll Students in Classes
+    const classes = await prisma.class.findMany()
+    const students = await prisma.student.findMany()
+
+    await Promise.all(
+      students.map((student) =>
+        classes.map((cls) =>
+          prisma.enrollment.create({
+            data: {
+              student: {
+                connect: { id: student.id },
+              },
+              class: {
+                connect: { id: cls.id },
+              },
+            },
+          }),
+        ),
       ),
     )
   } catch (error) {
