@@ -1,11 +1,10 @@
 import { prisma } from './client'
 import { randomUUID } from 'crypto'
-
 import type { Prisma } from '@prisma/client'
 
-const DEFAULT_PROFESSORS = [{ name: 'Dr. Smith' }, { name: 'Dr. Johnson' }, { name: 'Dr. Williams' }] as Array<
-  Partial<Prisma.ProfessorCreateInput>
->
+const DEFAULT_PROFESSORS = [{ name: 'Dr. Smith' }, { name: 'Dr. Johnson' }, { name: 'Dr. Williams' }] as Array<{
+  name: string
+}>
 
 const DEFAULT_CLASSES = [
   { name: 'Math 101', professorName: 'Dr. Smith' },
@@ -16,7 +15,7 @@ const DEFAULT_CLASSES = [
 const DEFAULT_STUDENTS = [
   { name: 'John Doe', email: 'john@doe.com' },
   { name: 'Jane Smith', email: 'jane@smith.com' },
-] as Array<Partial<Prisma.StudentCreateInput>>
+] as Array<{ name: string; email: string }>
 
 ;(async () => {
   try {
@@ -25,7 +24,7 @@ const DEFAULT_STUDENTS = [
       DEFAULT_STUDENTS.map((student) =>
         prisma.student.upsert({
           where: {
-            email: student.email!,
+            email: student.email,
           },
           update: {
             ...student,
@@ -43,7 +42,7 @@ const DEFAULT_STUDENTS = [
       DEFAULT_PROFESSORS.map((professor) =>
         prisma.professor.create({
           data: {
-            ...professor,
+            name: professor.name,
           },
         }),
       ),
@@ -61,7 +60,7 @@ const DEFAULT_STUDENTS = [
             data: {
               name,
               professor: {
-                connect: { id: professor.id },
+                connect: { professor_id: professor.professor_id },
               },
             },
           })
@@ -79,10 +78,10 @@ const DEFAULT_STUDENTS = [
           prisma.enrollment.create({
             data: {
               student: {
-                connect: { id: student.id },
+                connect: { student_id: student.student_id },
               },
               class: {
-                connect: { id: cls.id },
+                connect: { class_id: cls.class_id },
               },
             },
           }),
