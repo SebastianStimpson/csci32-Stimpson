@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("SCHOOL_DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Student {
+  student_id       String    @id @default(cuid())
+  name             String?
+  email            String?   @unique
+  emailVerified    DateTime?
+  enrollmentNumber String    @unique
+  enrollments      Enrollment[]
+
+  @@index([student_id])
+}
+
+model Professor {
+  professor_id String    @id @default(cuid())
+  name         String
+  classes      Class[]
+
+  @@index([professor_id])
+}
+
+model Class {
+  class_id     String    @id @default(cuid())
+  name         String
+  professor    Professor @relation(fields: [professor_id], references: [professor_id])
+  professor_id String
+  enrollments  Enrollment[]
+
+  @@index([professor_id])
+}
+
+model Enrollment {
+  enrollment_id String   @id @default(cuid())
+  student       Student  @relation(fields: [student_id], references: [student_id])
+  student_id    String
+  class         Class    @relation(fields: [class_id], references: [class_id])
+  class_id      String
+
+  @@index([student_id])
+  @@index([class_id])
+}

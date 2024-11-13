@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { useStudents } from '../hooks/useStudents';
+import useStudents
 
 export type Student = {
   student_id: string;
