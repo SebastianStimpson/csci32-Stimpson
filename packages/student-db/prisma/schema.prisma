@@ -13,10 +13,15 @@ generator client {
 
 model Student {
   student_id       String    @id @default(cuid())
-  name             String?
-  email            String?   @unique
+  name             String
+  email            String    @unique
+  enrollmentNumber String?   @unique
+  photoUrl         String?
+  address          String?
+  phoneNumber      String?
+  gpa              Float?
+  sex              String?
   emailVerified    DateTime?
-  enrollmentNumber String    @unique
   enrollments      Enrollment[]
 
   @@index([student_id])
