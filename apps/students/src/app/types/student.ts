@@ -13,6 +13,13 @@ export interface Student {
   currentClasses?: string[]
   currentProfessors?: string[]
 }
+interface Props {
+  student?: Student | null
+
+  onSave?: () => void
+
+  onCancel?: () => void
+}
 
 export interface StudentSearchParams {
   name?: string
