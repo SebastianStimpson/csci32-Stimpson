@@ -12,6 +12,7 @@ export interface Student {
   sex?: string
   currentClasses?: string[]
   currentProfessors?: string[]
+  is_deleted?: boolean
 }
 interface Props {
   student?: Student | null

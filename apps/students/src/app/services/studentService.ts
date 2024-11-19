@@ -34,9 +34,30 @@ export class StudentService {
     return response.json()
   }
 
-  // Delete student
+  // Soft delete student
   async deleteStudent(id: string): Promise<void> {
-    await fetch(`${this.baseUrl}/students/${id}`, { method: 'DELETE' })
+    await fetch(`${this.baseUrl}/students/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ is_deleted: true }),
+    })
+  }
+
+  // Fetch students excluding deleted ones
+  async findManyStudents(params?: StudentSearchParams): Promise<Student[]> {
+    const urlParams = new URLSearchParams()
+    Object.entries({ ...params, is_deleted: 'false' }).forEach(([key, value]) => {
+      if (value) urlParams.append(key, value.toString())
+    })
+    const response = await fetch(`${this.baseUrl}/students?${urlParams}`)
+    return response.json()
+  }
+
+  // Fetch a single student excluding deleted ones
+  async findOneStudent(id: string): Promise<Student | null> {
+    const response = await fetch(`${this.baseUrl}/students/${id}`)
+    const student = await response.json()
+    return student.is_deleted ? null : student
   }
 }
 

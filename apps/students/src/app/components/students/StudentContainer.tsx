@@ -6,6 +6,8 @@ import { StudentList } from './StudentList'
 import { StudentDetails } from './StudentDetails'
 import { StudentForm } from './StudentForm'
 import { useStudentContext } from '../../context/StudentContext'
+import { seedService } from '../../services/seedService'
+import { studentService } from '../../services/studentService'
 
 export const StudentContainer: FC = () => {
   const [searchParams, setSearchParams] = useState<StudentSearchParams>({})
@@ -42,9 +44,32 @@ export const StudentContainer: FC = () => {
     }
   }
 
+  const handleSeedData = async () => {
+    try {
+      await seedService.seedData()
+      await mutate() // Refresh the data
+    } catch (error) {
+      console.error('Error seeding data:', error)
+    }
+  }
+
+  const handleDeleteStudent = async (studentId: string) => {
+    if (window.confirm('Are you sure you want to delete this student?')) {
+      try {
+        await studentService.deleteStudent(studentId)
+        await mutate()
+      } catch (error) {
+        console.error('Error deleting student:', error)
+      }
+    }
+  }
+
   return (
     <div className="container mx-auto p-4">
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between">
+        <button onClick={handleSeedData} className="px-4 py-2 bg-green-600 text-white rounded-md">
+          Seed Data
+        </button>
         <button onClick={() => setIsFormOpen(true)} className="px-4 py-2 bg-blue-600 text-white rounded-md">
           Add New Student
         </button>
@@ -55,7 +80,7 @@ export const StudentContainer: FC = () => {
       {students.length === 0 ? (
         <div className="text-center p-4 text-gray-500">No students found</div>
       ) : (
-        <StudentList students={students} onStudentClick={handleStudentClick} />
+        <StudentList students={students} onStudentClick={handleStudentClick} onDelete={handleDeleteStudent} />
       )}
 
       {selectedStudent && !isFormOpen && (
