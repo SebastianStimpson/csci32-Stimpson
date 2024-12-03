@@ -3,5 +3,7 @@ export interface Assignment {
   title: string
   description: string
   dueDate: string
-  // Add other relevant fields if necessary
+  courseId: string
+  points: number
+  submitted: boolean
 }
